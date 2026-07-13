@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'; object-src 'self'">
+    <title>QuranRoom - Daily Focus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: linear-gradient(135deg, #FAF8F4 0%, #F0EDE4 100%);
+            color: #292825;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(216, 207, 193, 0.5);
+            padding: 56px 48px;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .decorative-blob {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #4D5E4F 0%, #8A8073 100%);
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        .blob-1 { top: -100px; right: -100px; }
+        .blob-2 { bottom: -100px; left: -100px; }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: 800;
+            color: #4D5E4F;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+        
+        .description {
+            font-size: 16px;
+            color: #8A8073;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+        
+        .status-message {
+            font-size: 14px;
+            color: #6B645A;
+            margin-bottom: 32px;
+            padding: 16px;
+            background: #F7F5F0;
+            border-radius: 12px;
+            border-left: 3px solid #4D5E4F;
+        }
+        
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .btn {
+            padding: 16px 32px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: #292825;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1a1816;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #4D5E4F;
+            border: 2px solid #4D5E4F;
+        }
+        
+        .btn-secondary:hover {
+            background: #4D5E4F;
+            color: white;
+        }
+        
+        .footer-note {
+            margin-top: 24px;
+            font-size: 12px;
+            color: #B0A99A;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="decorative-blob blob-1"></div>
+        <div class="decorative-blob blob-2"></div>
+        
+        <div class="content">
+            <div id="icon" class="icon">🕌</div>
+            
+            <h1 id="title">QuranRoom Dashboard</h1>
+            
+            <p id="description" class="description">
+                Welcome to your daily spiritual anchor. Log your reading to unlock browsing.
+            </p>
+
+            <div id="status-message" class="status-message hidden">
+                <!-- Dynamic status message -->
+            </div>
+
+            <div class="button-group">
+                <button id="primary-btn" class="btn btn-primary">
+                    Return to Browsing
+                </button>
+                
+                <a id="quran-link" href="https://altadabbur.com/en/quran?page=1&verse=1" target="_blank" class="btn btn-secondary">
+                    Open al-Tadabbur
+                </a>
+            </div>
+            
+            <p id="footer-note" class="footer-note">
+                Synced with Your Private Log
+            </p>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

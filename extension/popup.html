@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self'; object-src 'self'">
+  <title>QuranRoom</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4D5E4F;
+      --bg: #FAF8F4;
+      --card: #FFFFFF;
+      --text: #292825;
+      --border: #E5E1D8;
+      --success: #4D5E4F;
+      --error: #A84E4E;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      width: 360px;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      padding: 20px;
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .logo {
+      font-weight: 800;
+      font-size: 16px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .badge {
+      font-size: 10px;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    
+    .badge-pending {
+      background: #FDECEC;
+      color: var(--error);
+    }
+    
+    .badge-logged {
+      background: #E9F2EA;
+      color: var(--success);
+    }
+    
+    .tabs {
+      display: flex;
+      gap: 6px;
+      background: #EEEAE1;
+      padding: 4px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 7px;
+      transition: all 0.2s;
+      color: #8A8073;
+      border: none;
+      background: transparent;
+    }
+    
+    .tab.active {
+      background: white;
+      color: var(--text);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+    
+    .view {
+      display: none;
+    }
+    
+    .view.active {
+      display: block;
+    }
+    
+    label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: #6B645A;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--text);
+      margin-bottom: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    
+    input:focus,
+    textarea:focus {
+      border-color: var(--primary);
+    }
+    
+    input::placeholder,
+    textarea::placeholder {
+      color: #B0A99A;
+    }
+    
+    .row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    
+    .checkbox-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 14px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    
+    .checkbox-wrapper:hover {
+      border-color: var(--primary);
+    }
+    
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      cursor: pointer;
+      accent-color: var(--primary);
+    }
+    
+    .checkbox-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      margin: 0;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    
+    .btn-primary {
+      width: 100%;
+      background: var(--text);
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+    
+    .btn-primary:hover {
+      background: #1a1816;
+      transform: translateY(-1px);
+    }
+    
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+    
+    .btn-primary:disabled {
+      background: #CCC;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .btn-danger {
+      background: #A84E4E;
+    }
+    
+    .btn-danger:hover {
+      background: #8B3B3B;
+    }
+    
+    .divider {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    
+    .info-text {
+      font-size: 12px;
+      color: #8A8073;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      padding: 12px;
+      background: #F7F5F0;
+      border-radius: 8px;
+    }
+    
+    .footer {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    
+    .footer-link {
+      font-size: 12px;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+    
+    .footer-link:hover {
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <div class="logo">
+        <span>🕌</span>
+        <span>QuranRoom</span>
+      </div>
+      <div id="date-display" style="font-size:10px;color:#8A8073;margin-top:3px;font-weight:600;"></div>
+    </div>
+    <div id="status-badge" class="badge badge-pending">Pending</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-target="log-view">Quick Log</button>
+    <button class="tab" data-target="setup-view">Settings</button>
+  </div>
+
+  <!-- LOG VIEW -->
+  <div id="log-view" class="view active">
+    <div class="row">
+      <div style="flex: 2;">
+        <label>Quran Page</label>
+        <input type="number" id="page-input" min="1" max="604" placeholder="1-604">
+      </div>
+      <div style="flex: 1;">
+        <label>Menses</label>
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="menses-check">
+          <label class="checkbox-label" for="menses-check">Yes</label>
+        </div>
+      </div>
+    </div>
+
+    <label>Daily Intention</label>
+    <input type="text" id="intention-input" placeholder="What is your core focus today?">
+
+    <label>Reflection</label>
+    <textarea id="notes-input" rows="3" placeholder="Key takeaway from your reading..."></textarea>
+
+    <button id="save-btn" class="btn-primary">Sync & Unlock Browsing</button>
+  </div>
+
+  <!-- SETUP VIEW -->
+  <div id="setup-view" class="view">
+    <p class="info-text">
+      <strong>📊 Google Sheet Integration</strong><br>
+      Connect your own Google Apps Script URL to sync reflections and maintain a permanent record across devices.
+      New here? <a href="#" id="open-onboarding-link">Open the guided setup →</a>
+    </p>
+
+    <label>Apps Script Web App URL</label>
+    <input type="text" id="url-input" placeholder="https://script.google.com/macros/s/...">
+
+    <button id="save-settings-btn" class="btn-primary">Save Configuration</button>
+
+    <div class="divider">
+      <p class="info-text">
+        <strong>📖 Reading Schedule</strong><br>
+        Paste page numbers separated by commas. Each day the next page will be pre-filled automatically.
+      </p>
+      <label>Page List</label>
+      <textarea id="schedule-input" rows="4" placeholder="380, 381, 382, 383, 384, ..."></textarea>
+      <button id="save-schedule-btn" class="btn-primary">Save Schedule</button>
+      <div style="margin-top: 10px; font-size: 11px; color: #8A8073;" id="schedule-status"></div>
+      <div style="margin-top: 10px;">
+        <button id="clear-schedule-btn" class="btn-primary btn-danger">Clear Schedule</button>
+      </div>
+    </div>
+
+    <div class="divider">
+      <p class="info-text">
+        <strong>🔄 Reset Today's Log</strong><br>
+        Clear today's log if you need to re-sync or fix an entry. This only clears the local storage, not your Google Sheet.
+      </p>
+      <button id="clear-log-btn" class="btn-primary btn-danger">Clear Today's Log</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    <a href="https://altadabbur.com/en/quran?page=1" target="_blank" class="footer-link" id="tadabbur-link">Open al-Tadabbur →</a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
