@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="script-src 'self'; object-src 'self'">
+<title>QuranRoom Setup</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #4D5E4F;
+    --bg: #FAF8F4;
+    --card: #FFFFFF;
+    --text: #292825;
+    --border: #E5E1D8;
+    --muted: #8A8073;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #FAF8F4 0%, #F0EDE4 100%);
+    color: var(--text);
+    padding: 40px 20px 80px;
+  }
+  .wrap { max-width: 680px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 40px; }
+  header .icon { font-size: 48px; margin-bottom: 12px; }
+  h1 { font-size: 28px; font-weight: 800; color: var(--primary); margin-bottom: 8px; }
+  header p { color: var(--muted); font-size: 15px; }
+  .step {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+  }
+  .step-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .step-num {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px;
+  }
+  .step h2 { font-size: 17px; font-weight: 700; }
+  .step p, .step li { font-size: 14px; color: #5c564c; line-height: 1.6; }
+  .step ol, .step ul { padding-left: 20px; margin: 8px 0; }
+  .step a { color: var(--primary); font-weight: 600; }
+  .codebox {
+    position: relative;
+    background: #1e1d1a;
+    color: #e8e4da;
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 12px;
+    max-height: 260px;
+    overflow: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: pre;
+  }
+  .copy-btn {
+    position: sticky;
+    float: right;
+    top: 0;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    margin-bottom: 12px;
+  }
+  .copy-btn:hover { background: #3c4a3e; }
+  input[type="text"] {
+    width: 100%;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 13px;
+    font-family: inherit;
+    margin-top: 10px;
+  }
+  input:focus { outline: none; border-color: var(--primary); }
+  .btn-primary {
+    width: 100%;
+    background: var(--text);
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 14px;
+  }
+  .btn-primary:hover { background: #1a1816; }
+  .btn-primary:disabled { background: #ccc; cursor: not-allowed; }
+  .status { font-size: 13px; margin-top: 10px; font-weight: 600; }
+  .status.ok { color: var(--primary); }
+  .status.err { color: #A84E4E; }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    background: #F0EDE4;
+    padding: 3px 8px;
+    border-radius: 6px;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="icon">🕌</div>
+    <h1>Set Up QuranRoom</h1>
+    <p>Connect your own Google Sheet — your data stays entirely yours. Takes about a minute.</p>
+  </header>
+
+  <div class="step">
+    <div class="step-head"><div class="step-num">1</div><h2>Create a Google Sheet</h2></div>
+    <p>Open a new spreadsheet at <a href="https://sheets.new" target="_blank">sheets.new</a> (or reuse one you already have). This is where your daily logs will be saved.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-head"><div class="step-num">2</div><h2>Add the script <span class="badge">copy &amp; paste</span></h2></div>
+    <p>In your sheet, go to <strong>Extensions → Apps Script</strong>, delete the placeholder code, and paste in the code below.</p>
+    <button class="copy-btn" id="copy-btn">Copy Code</button>
+    <div class="codebox" id="code-box"></div>
+  </div>
+
+  <div class="step">
+    <div class="step-head"><div class="step-num">3</div><h2>Deploy as a Web App</h2></div>
+    <ol>
+      <li>Click <strong>Deploy → New deployment</strong></li>
+      <li>Click the gear icon next to "Select type" and choose <strong>Web app</strong></li>
+      <li>Set <strong>Execute as: Me</strong> and <strong>Who has access: Anyone</strong></li>
+      <li>Click <strong>Deploy</strong>, then authorize the script (click "Advanced" → "Go to project (unsafe)" → "Allow" — this warning is normal for personal scripts)</li>
+      <li>Copy the <strong>Web app URL</strong> it gives you (starts with <code>https://script.google.com/macros/s/...</code>)</li>
+    </ol>
+  </div>
+
+  <div class="step">
+    <div class="step-head"><div class="step-num">4</div><h2>Paste your URL below</h2></div>
+    <p>This saves it directly into the extension — nothing leaves your browser except the sync requests you send yourself.</p>
+    <input type="text" id="url-input" placeholder="https://script.google.com/macros/s/.../exec">
+    <button class="btn-primary" id="save-btn">Save &amp; Finish Setup</button>
+    <div class="status" id="status"></div>
+  </div>
+</div>
+
+<script src="onboarding.js"></script>
+</body>
+</html>

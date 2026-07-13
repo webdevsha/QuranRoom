@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "QuranRoom - Daily Focus Guard",
+  "version": "1.0.0",
+  "description": "Lock down browsing daily until you log your Quran reading and core intentions. Syncs to your own Google Sheet.",
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "QuranRoom Quick-Log"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://script.google.com/*"
+  ]
+}
